@@ -1,0 +1,94 @@
+.weather-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.day-forecast {
+    background-color: rgb(236, 234, 234);
+    margin-left: 5px;
+}
+
+.weather-day {
+    font-size: 12px;
+}
+
+.card-body-right {
+    text-align: right;
+}
+
+.card-body {
+    display: inline;
+    border-radius: 10px; 
+    overflow: hidden; 
+}
+svg {
+color: #999595;
+fill: currentColor;
+width: 24px;
+height: 24px;
+padding: 1px;
+}
+.my-head{
+color: rgb(66, 179, 199);
+}
+.nav-bar a{
+    color: white;
+}
+.forecast{
+    background-color: #c4c4c4;
+}
+.row{
+    margin: 10px;
+}
+.col {
+    max-width: 100%;
+    top: -10px;
+    padding-top: 10px;
+}
+.selected-day {
+    background-color:#dee2e6;
+    border: 1px solid #ccc; 
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6; 
+    background-color:  #dee2e6;
+}
+.today{
+    border: 1px solid #dee2e6; 
+    background-color:  #dee2e6;
+}
+.nearby{
+    margin-top: 10px;
+    border: 1px solid #dee2e6; 
+    background-color:  #dee2e6;
+}
+.weather{
+    margin-top: 10px;
+    border: 1px solid #dee2e6; 
+    background-color:  #dee2e6;
+}
+.icon{
+    width: 50px;
+    height: 50px;
+}
+h4{
+    color: rgb(66, 179, 199);
+}
+.error404 {
+    background-image: url(../img/error404.png);
+    width: 100%;
+    height: 654px;
+    margin-bottom: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.horizontal{
+    padding: 0px;
+}
+.g-0 img{
+    width: 150px;
+    height: 150px;
+    margin-top: -35px;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоди</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="my-head">MY WEATHER</h3>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <input type="text" id="cityInput" class="form-control" placeholder="Введіть назву міста">
+                        <button class="btn btn-link" id="searchButton">
+                            <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row nav-bar">
+            <div class="container mt-4">
+                <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+                    <ul class="nav nav-tabs" id="weatherTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="today-tab" data-toggle="tab" href="#today">Today</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="forecast-tab" data-toggle="tab" href="#forecast">5-day forecast</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col forecast">
+            <div class="container mt-4">
+                <img id="error"/>
+                <div class="tab-content" id="weatherTabsContent">
+                    <div class="tab-pane fade show active" id="today">
+                        <div id="todayWeather" class="col today"></div>
+                        <div id="hourly-weather" class="col weather"></div>
+                        <div id="nearbyCities" class="col nearby"></div>
+                    </div>
+                    <div class="tab-pane fade" id="forecast">
+                        <div id="forecastWeather"></div>
+                        <div id="extendedForecastWeather"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+    <script src="js/script.js"></script>
+    <script id="weather-template" type="text/x-handlebars-template">
+        <div class="row current-weather">
+            <div class="col-md-6 d-flex align-items-center justify-content-star">
+                <h4 class="card-title">Поточна погода</h4>
+            </div>
+            <div class="col-6 d-flex align-items-center justify-content-end">
+                <p class="card-text"><h4>{{date}}</h4></p>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col-md-4 d-flex align-items-center justify-content-start">
+                <div class="card-body-right ">
+                    <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" class="weather-icon" alt="Weather icon">
+                    <p class="card-text">{{description}}</p>
+                </div>
+            </div>
+            <div class="col-md-4  align-items-center justify-content-end">
+                    <h1>{{temp}}°C</h1>
+                    <p class="card-text">Відчувається як: {{feels_like}}°C</p>
+            </div>
+            <div class="col-md-4 d-flex align-items-center justify-content-end">
+                <div class="card-body-right ">
+                    <p class="card-text">Схід сонця: {{sunrise}}</p>
+                    <p class="card-text">Захід сонця: {{sunset}}</p>
+                    <p class="card-text">Довжина дня: {{dayLength}} годин</p>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script id="extended-forecast" type="text/x-handlebars-template">
+        <div class="col-md-12 horizontal">
+            <div class="table-responsive horizontal-table">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col"><h4>Hourly</h4></th>
+                            {{#each this}}
+                            <th scope="col">{{time}}</th>
+                            {{/each}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            {{#each this}}
+                            <td><img class="icon" src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="Weather icon"></td>
+                            {{/each}}
+                        </tr>
+                        <tr>
+                            <td>Температура (°C)</td>
+                            {{#each this}}
+                            <td>{{temp}}°C</td>
+                            {{/each}}
+                        </tr>
+                        <tr>
+                            <td>Опис</td>
+                            {{#each this}}
+                            <td>{{description}}</td>
+                            {{/each}}
+                        </tr>
+                        <tr>
+                            <td>Вологість </td>
+                            {{#each this}}
+                            <td>{{humidity}}%</td>
+                            {{/each}}
+                        </tr>
+                        <tr>
+                            <td>Тиск </td>
+                            {{#each this}}
+                            <td>{{pressure}} hPa</td>
+                            {{/each}}
+                        </tr>
+                        <tr>
+                            <td>Швидкість вітру </td>
+                            {{#each this}}
+                            <td>{{windSpeed}} м/с</td>
+                            {{/each}}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
+</body>
+</html>
